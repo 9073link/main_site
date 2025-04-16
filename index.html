@@ -1,0 +1,142 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>积极心理学养老驿站</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- 导航栏 -->
+  <nav class="bg-orange-500 text-white p-4">
+    <div class="container mx-auto flex justify-between">
+      <a href="/" class="text-2xl font-bold">养老驿站</a>
+      <div>
+        <a href="#courses" class="mx-2">课程</a>
+        <a href="#workshops" class="mx-2">工作坊</a>
+        <a href="#pension" class="mx-2">养老院推荐</a>
+        <a href="#about" class="mx-2">关于我们</a>
+        <a href="#contact" class="mx-2">联系我们</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 首页 -->
+  <section class="bg-orange-100 py-16 text-center">
+    <div class="container mx-auto">
+      <h1 class="text-4xl font-bold mb-4">用积极心理学提升老人幸福感</h1>
+      <p class="text-lg mb-6">深圳本地养老驿站，提供专业课程、工作坊和养老院推荐服务</p>
+      <a href="#contact" class="bg-orange-500 text-white px-6 py-3 rounded">立即报名</a>
+    </div>
+  </section>
+
+  <!-- 课程 -->
+  <section id="courses" class="py-16">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-8">我们的课程</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-xl font-bold">感恩与幸福</h3>
+          <p>通过感恩日记提升生活满意度，6次课，50元/次</p>
+          <a href="#contact" class="text-orange-500">报名</a>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-xl font-bold">正念与抗压</h3>
+          <p>正念冥想缓解焦虑，4次课，50元/次</p>
+          <a href="#contact" class="text-orange-500">报名</a>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-xl font-bold">社会连接</h3>
+          <p>小组讨论增强归属感，8次课，50元/次</p>
+          <a href="#contact" class="text-orange-500">报名</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工作坊 -->
+  <section id="workshops" class="bg-gray-50 py-16">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-8">社工工作坊</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-xl font-bold">积极心理学应用</h3>
+          <p>培训社工提升老人幸福感，3小时，100元/人</p>
+          <a href="#contact" class="text-orange-500">报名</a>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-xl font-bold">心理危机干预</h3>
+          <p>教授情绪引导技巧，4小时，100元/人</p>
+          <a href="#contact" class="text-orange-500">报名</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 养老院推荐 -->
+  <section id="pension" class="py-16">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-8">养老院推荐</h2>
+      <p class="text-center mb-6">免费组织参观，专业咨询，助您找到理想养老院</p>
+      <a href="#contact" class="block text-center text-orange-500">联系我们</a>
+    </div>
+  </section>
+
+  <!-- 关于我们 -->
+  <section id="about" class="bg-gray-50 py-16">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-8">关于我们</h2>
+      <p class="text-center mb-6">我们是深圳本地养老驿站，专注用积极心理学提升老年生活质量</p>
+      <p class="text-center">团队由策划专家和服务支持者组成，致力于社区养老服务</p>
+    </div>
+  </section>
+
+  <!-- 联系我们 -->
+  <section id="contact" class="py-16">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-8">联系我们</h2>
+      <form class="max-w-md mx-auto" action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="text" name="name" placeholder="姓名" class="w-full p-2 mb-4 border rounded" required>
+        <input type="tel" name="phone" placeholder="电话" class="w-full p-2 mb-4 border rounded" required>
+        <textarea name="message" placeholder="留言" class="w-full p-2 mb-4 border rounded" rows="4"></textarea>
+        <button type="submit" class="bg-orange-500 text-white px-6 py-3 rounded">提交</button>
+      </form>
+      <p class="text-center mt-4">微信：xxx | 电话：xxx | 邮箱：xxx</p>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-orange-500 text-white p-4 text-center">
+    <p>&copy; 2025 养老驿站. All rights reserved.</p>
+  </footer>
+</body>
+</html>
